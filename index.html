@@ -1,0 +1,304 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Álvaro · Timed Assessment · Sessions 9 & 10</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Patrick+Hand&display=swap');
+:root{
+  --navy:#17324D;--navy2:#0D2F52;--blue:#2E8FB8;--sky:#EAF6FD;--mint:#EAF7F2;
+  --yellow:#FFD75E;--yellow2:#FFF4C7;--cream:#FFFDF8;--white:#fff;--pink:#FFF1F4;
+  --text:#17324D;--muted:#667D90;--line:#D7E3EB;--green:#2F8B69;--red:#C4535D;
+  --purple:#8E73C9;--shadow:0 12px 28px rgba(23,50,77,.10)
+}
+*{box-sizing:border-box}
+body{margin:0;background:#F4F1EA;color:var(--text);font-family:'Nunito',Arial,sans-serif}
+button{font:inherit}
+.topbar{position:sticky;top:0;z-index:30;background:linear-gradient(90deg,var(--navy2),#1B5D8C);color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.12)}
+.topbar .inner{max-width:1060px;margin:auto;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand{font-weight:900}.brand small{display:block;font-size:11px;color:#D6E8F4;margin-top:2px}
+.progress-shell{position:sticky;top:63px;z-index:25;height:7px;background:#DCE6EC}.progress{height:100%;width:0;background:linear-gradient(90deg,#42A89D,var(--yellow));transition:.18s}
+.hero{padding:50px 20px 36px;background:linear-gradient(135deg,var(--cream) 70%,var(--sky) 70%);border-bottom:1px solid var(--line)}
+.wrap{max-width:1060px;margin:auto}
+.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:28px;align-items:center}
+.eyebrow{font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
+.hero h1{font-size:58px;line-height:.94;letter-spacing:-2px;margin:10px 0 14px}
+.hero h1 em{font-family:'Patrick Hand';font-style:normal;font-weight:400;background:linear-gradient(transparent 72%,var(--yellow) 72%)}
+.hero p{font-size:17px;font-weight:700;color:#35536B;max-width:700px}
+.note{background:var(--yellow);padding:24px;border-radius:22px;font-family:'Patrick Hand';font-size:28px;line-height:1.08;text-align:center;box-shadow:var(--shadow);transform:rotate(1deg)}
+section{padding:36px 20px}
+.info-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+.info{background:#fff;border:1px solid var(--line);border-radius:15px;padding:16px;text-align:center;box-shadow:0 5px 14px rgba(23,50,77,.05)}
+.info strong{display:block;font-size:28px}
+.lead{color:var(--muted);font-weight:700;line-height:1.55}
+.timer{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--yellow2);border:1px solid #ECD373;padding:14px;border-radius:15px;margin-bottom:14px}
+.timer strong{font-size:28px}
+.btn{border:0;border-radius:999px;padding:10px 15px;font-weight:900;cursor:pointer}
+.btn.primary{background:var(--navy);color:#fff}
+.btn.secondary{background:#fff;color:var(--navy);border:2px solid var(--navy)}
+.scorebox{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--navy);color:#fff;border-radius:16px;padding:14px 16px;margin-bottom:14px}
+.scorebox strong{font-size:26px}.mini-progress{flex:1;min-width:180px;height:9px;background:rgba(255,255,255,.18);border-radius:999px;overflow:hidden}.mini-fill{height:100%;width:0;background:var(--yellow);transition:.2s}
+.qcard{background:#fff;border:1px solid var(--line);border-radius:17px;padding:18px;margin:0 0 13px;box-shadow:0 5px 14px rgba(23,50,77,.05)}
+.qhead{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.qnum{font-size:11px;color:var(--blue);font-weight:900;text-transform:uppercase;letter-spacing:.08em}
+.qcat{font-size:10px;font-weight:900;border-radius:999px;padding:5px 8px;background:var(--sky);color:var(--navy)}
+.qtext{font-size:15px;font-weight:900;margin:8px 0 12px}
+.options{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.option{border:2px solid #D9E4EA;background:#fff;color:var(--navy);padding:10px;border-radius:11px;text-align:left;cursor:pointer;font-weight:800}
+.option:hover:not(:disabled){border-color:var(--blue);background:#F6FBFE}
+.option.correct{border-color:var(--green);background:#EAF7F1;color:#1D6A50}
+.option.wrong{border-color:var(--red);background:#FFF0F1;color:#963844}
+.option:disabled{cursor:default}
+.feedback{display:none;margin-top:9px;border-radius:10px;padding:9px 11px;font-size:12px;font-weight:800}
+.feedback.show{display:block}.feedback.good{background:#EAF7F1;color:#1D6A50}.feedback.bad{background:#FFF0F1;color:#963844}
+.result{display:none;margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow)}
+.result h2{margin:0 0 8px;font-size:28px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.card{border:1px solid var(--line);border-radius:15px;padding:16px;background:#fff}.card.mint{background:var(--mint)}.card.sky{background:var(--sky)}.card.yellow{background:var(--yellow2)}.card.pink{background:var(--pink)}
+.card h3{margin:0 0 6px}.card p{margin:0;line-height:1.5;font-size:13px}
+.rule{padding:14px;border-radius:14px;background:#fff;border:1px solid var(--line);margin-top:12px}
+.rule ul{margin:8px 0 0;padding-left:20px}.rule li{margin:5px 0}
+.category-table{width:100%;border-collapse:collapse;margin-top:14px}.category-table th,.category-table td{border:1px solid var(--line);padding:9px;font-size:12px;text-align:left}.category-table th{background:var(--sky)}
+.footer{background:var(--navy);color:#fff;text-align:center;padding:28px 20px}.footer strong{font-family:'Patrick Hand';font-size:30px}
+@media(max-width:800px){.hero-grid{grid-template-columns:1fr}.info-grid{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:46px}}
+@media(max-width:560px){.options,.grid2,.info-grid{grid-template-columns:1fr}.hero h1{font-size:40px}}
+
+.exam-note{background:var(--mint);border:1px solid #B8DCCB;border-radius:15px;padding:14px 16px;margin-top:14px;font-size:12px;font-weight:800;line-height:1.55}
+.hidden-area-note{font-size:10px;color:var(--muted);font-weight:800;margin-top:4px}
+.review-table{width:100%;border-collapse:collapse;margin-top:14px}
+.review-table th,.review-table td{border:1px solid var(--line);padding:9px;font-size:11px;text-align:left;vertical-align:top}
+.review-table th{background:var(--sky)}
+
+.option.selected{border-color:var(--blue);background:#EAF6FD;box-shadow:0 0 0 1px rgba(46,143,184,.15)}
+.option.correct-answer{border-color:var(--green);background:#EAF7F1;color:#1D6A50}
+.option.incorrect-answer{border-color:var(--red);background:#FFF0F1;color:#963844}
+.submit-row{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:18px}
+.submit-note{background:var(--yellow2);border:1px solid #ECD373;border-radius:14px;padding:12px 14px;font-size:12px;font-weight:800;line-height:1.5;margin:14px 0}
+.answer-summary{margin-top:18px}
+.answer-card{border:1px solid var(--line);border-radius:14px;padding:14px;margin:10px 0;background:#fff}
+.answer-card.correct{border-left:6px solid var(--green)}
+.answer-card.wrong{border-left:6px solid var(--red)}
+.answer-card h4{margin:0 0 7px;font-size:13px}.answer-card p{margin:5px 0;font-size:12px;line-height:1.5}
+.answer-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.answer-pill{font-size:10px;font-weight:900;border-radius:999px;padding:5px 8px;background:var(--sky)}
+
+.stage{display:none}
+.stage.active{display:block}
+.stage-banner{background:linear-gradient(135deg,var(--mint),var(--sky));border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:16px}
+.stage-banner h2{margin:0 0 6px;font-size:24px}
+.reading-passage{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 5px 14px rgba(23,50,77,.05);margin-bottom:16px}
+.reading-passage h3{margin:0 0 10px;font-size:22px}
+.reading-passage p{font-size:14px;line-height:1.75;margin:10px 0}
+.stage-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:18px}
+.section-pill{display:inline-block;background:var(--yellow2);border:1px solid #ECD373;border-radius:999px;padding:6px 10px;font-size:10px;font-weight:900;margin-bottom:8px}
+.total-progress{font-size:11px;font-weight:900;color:#D6E8F4}
+</style></head><body>
+<nav class="topbar">
+<div class="inner">
+<div class="brand">English with Mr. Rengifo<small>Álvaro · Timed Assessment · Sessions 9 & 10</small></div>
+<div><b>25 questions</b><div class="total-progress">20 grammar/vocabulary + 5 reading</div></div>
+</div>
+</nav>
+<div class="progress-shell"><div class="progress" id="scrollProgress"></div></div>
+
+<header class="hero">
+<div class="wrap hero-grid">
+<div>
+<div class="eyebrow">Cumulative Timed Assessment · American English</div>
+<h1>Sessions 9 + 10<br><em>two-stage exam mode.</em></h1>
+<p>Stage 1 tests the grammar, vocabulary and multiword-verb content from Sessions 9 and 10. Stage 2 gives you a short reading passage with five comprehension questions. No answers or explanations are revealed until both stages are complete.</p>
+</div>
+<div class="note">Stage 1: 20 items.<br>Stage 2: Reading.<br><b>Feedback only at the end.</b></div>
+</div>
+</header>
+
+<section>
+<div class="wrap">
+<p class="lead">The official exam pace is 50 questions in 60 minutes, or about <b>72 seconds per question</b>. This assessment contains <b>25 total items</b>, so the equivalent target is <b>30 minutes</b>. The timer runs continuously across both stages. You may change answers freely within the current stage before moving on.</p>
+<div class="info-grid">
+<div class="info"><strong>25</strong>total questions</div>
+<div class="info"><strong>30 min</strong>target time</div>
+<div class="info"><strong>75%</strong>exam pass reference</div>
+<div class="info"><strong>72 sec</strong>target pace / question</div>
+</div>
+<div class="exam-note">Assessment mode: No topic labels and no instant feedback. Stage 1 answers remain editable until you continue to the Reading section. Stage 2 answers remain editable until final submission. Only then will the page reveal scores, correct/incorrect answers, category breakdown and total completion time.</div>
+</div>
+</section>
+
+<section style="background:#fff">
+<div class="wrap">
+<div class="timer">
+<strong id="clock">30:00</strong>
+<button class="btn primary" id="startTimer">Start timer</button>
+<button class="btn secondary" id="resetTimer">Reset</button>
+<span id="timerMsg"></span>
+</div>
+
+<div id="stage1" class="stage active">
+<div class="stage-banner"><span class="section-pill">STAGE 1 OF 2</span><h2>Grammar, Vocabulary & Multiword Verbs</h2><p class="lead">20 questions from Sessions 9 and 10. Review and change your answers freely before moving to Reading.</p></div>
+<div class="scorebox">
+<strong><span id="done1">0</span>/20 answered</strong>
+<div class="mini-progress"><div class="mini-fill" id="fill1"></div></div>
+<span id="status1">Review and change answers freely before continuing.</span>
+</div>
+<div id="questions1"></div>
+<div class="submit-note">When you continue, Stage 1 will be locked. No answers or feedback will be shown yet. The timer will continue into the Reading section.</div>
+<div class="stage-actions"><button class="btn primary" id="toReading">Continue to Reading</button></div>
+</div>
+
+<div id="stage2" class="stage">
+<div class="stage-banner"><span class="section-pill">STAGE 2 OF 2</span><h2>Reading Comprehension</h2><p class="lead">Read the passage carefully and answer five questions testing main idea, specific detail, inference, reference and writer purpose.</p></div>
+<div class="reading-passage"><h3>Flexible Schedules at Work</h3>
+<p>Last year, a mid-sized company noticed that many employees were arriving late because of heavy traffic during the morning rush hour. Instead of changing the official start time for everyone, management introduced a flexible schedule. Employees could begin work any time between 7:00 and 9:00 a.m., as long as they completed their required hours and attended scheduled meetings.</p>
+<p>At first, some managers were concerned that the new system might make teamwork more difficult. However, after three months, attendance improved and employees reported lower stress levels. The company also found that most teams continued to meet deadlines and communicate effectively. Because of these results, management decided to keep the flexible schedule and review it again at the end of the year.</p>
+</div>
+<div class="scorebox">
+<strong><span id="done2">0</span>/5 answered</strong>
+<div class="mini-progress"><div class="mini-fill" id="fill2"></div></div>
+<span id="status2">Answer all five reading questions, then submit the full assessment.</span>
+</div>
+<div id="questions2"></div>
+<div class="submit-note">Final submission locks both sections and reveals the complete feedback, all correct and incorrect answers, reading performance and accumulated completion time.</div>
+<div class="stage-actions"><button class="btn secondary" id="backStage1">Back to Stage 1 review</button><button class="btn primary" id="submitAssessment">Submit full assessment</button></div>
+</div>
+
+<div id="result" class="result"></div>
+</div>
+</section>
+
+<footer class="footer">
+<strong>English with Mr. Rengifo</strong>
+<div>Álvaro · Cumulative Timed Assessment · Sessions 9–10 + Reading</div>
+</footer>
+<script>
+const questions1=[{"area": "Session 9 · Passive Voice", "q": "The final report ___ every Friday.", "o": ["is checked", "checks", "was checking", "has check"], "a": 0, "e": "Present Simple Passive: is checked."}, {"area": "Session 9 · Passive Voice", "q": "The equipment ___ when the inspector arrived.", "o": ["tested", "was being tested", "has been testing", "is test"], "a": 1, "e": "Past Continuous Passive: was being tested."}, {"area": "Session 9 · Passive Voice", "q": "The documents ___ already ___.", "o": ["have / sent", "are / send", "have been / sent", "were / sending"], "a": 2, "e": "Present Perfect Passive: have been sent."}, {"area": "Session 9 · Passive Voice", "q": "Safety helmets ___ in this area.", "o": ["must wear", "must worn", "are must wear", "must be worn"], "a": 3, "e": "Modal Passive: must be worn."}, {"area": "Session 9 · Causatives", "q": "I ___ my laptop repaired yesterday.", "o": ["had", "did", "made", "was"], "a": 0, "e": "Causative: had + object + past participle."}, {"area": "Session 9 · Causatives", "q": "She is going to ___ her car serviced tomorrow.", "o": ["has", "have", "having", "had"], "a": 1, "e": "After going to, use base form have."}, {"area": "Session 9 · Reported Speech", "q": "“I am tired.” → She said she ___ tired.", "o": ["is", "has been", "was", "will be"], "a": 2, "e": "Standard backshift: Present Simple/verb be → Past Simple."}, {"area": "Session 9 · Reported Speech", "q": "“I will call you.” → He said he ___ me.", "o": ["will call", "called", "has called", "would call"], "a": 3, "e": "Will usually backshifts to would."}, {"area": "Session 9 · Reported Questions", "q": "“Where do you work?” → He asked me where I ___.", "o": ["worked", "work", "did work", "was work"], "a": 0, "e": "Reported questions use statement word order and backshift."}, {"area": "Session 9 · Reported Questions", "q": "“Are you ready?” → She asked ___ I was ready.", "o": ["what", "if", "where", "that"], "a": 1, "e": "Yes/No reported questions use if/whether."}, {"area": "Session 9 · Reporting Verbs", "q": "She advised me ___ earlier.", "o": ["leave", "leaving", "to leave", "left"], "a": 2, "e": "Advise + person + to-infinitive."}, {"area": "Session 9 · Narrative Grammar", "q": "By the time we arrived, the meeting ___.", "o": ["started", "was starting", "has started", "had started"], "a": 3, "e": "Earlier past event → Past Perfect."}, {"area": "Session 9 · Narrative Grammar", "q": "They ___ for two hours when the bus finally arrived.", "o": ["had been waiting", "waited", "had waited", "were waited"], "a": 0, "e": "Duration continuing up to a past point → Past Perfect Continuous."}, {"area": "Session 9 · Past Habits", "q": "She ___ live in Cusco, but she moved years ago.", "o": ["would", "used to", "was use to", "did used to"], "a": 1, "e": "Past state no longer true → used to."}, {"area": "Session 10 · Multiword Verbs", "q": "The company is ___ the complaint.", "o": ["turning off", "running out of", "looking into", "putting away"], "a": 2, "e": "Look into = investigate."}, {"area": "Session 10 · Multiword Verbs", "q": "They decided to ___ the meeting until Monday.", "o": ["take over", "run out of", "look after", "put off"], "a": 3, "e": "Put off = postpone."}, {"area": "Session 10 · Multiword Verbs", "q": "Which sentence uses a separable phrasal verb correctly?", "o": ["Turn it off.", "Turn off it.", "Look the issue into.", "Deal the problem with."], "a": 0, "e": "With separable turn off, a pronoun goes between verb and particle."}, {"area": "Session 10 · Collocations", "q": "We need to ___ a decision before noon.", "o": ["do", "make", "build", "perform"], "a": 1, "e": "Make a decision is the standard collocation."}, {"area": "Session 10 · Vocabulary Fields", "q": "A person you work with is a ___.", "o": ["passenger", "patient", "colleague", "tourist"], "a": 2, "e": "Colleague = coworker."}, {"area": "Session 10 · Functional Language", "q": "“I’m afraid there’s a problem with my room.” This is a ___.", "o": ["greeting", "invitation", "congratulation", "complaint"], "a": 3, "e": "The speaker is making a complaint."}];
+const questions2=[{"area": "Reading · Main Idea", "q": "What is the main idea of the text?", "o": ["A company introduced and evaluated a flexible work schedule.", "Employees wanted higher salaries.", "Traffic problems forced the company to close.", "Managers stopped holding meetings."], "a": 0, "e": "The whole text focuses on the introduction and results of a flexible schedule."}, {"area": "Reading · Specific Detail", "q": "Why were many employees arriving late?", "o": ["Because meetings started too early.", "Because of heavy morning traffic.", "Because they worked fewer hours.", "Because the company moved offices."], "a": 1, "e": "The first sentence explicitly mentions heavy traffic during the morning rush hour."}, {"area": "Reading · Inference", "q": "What can we reasonably infer about the flexible schedule after three months?", "o": ["It caused most teams to miss deadlines.", "Employees refused to use it.", "It was generally successful.", "Management immediately canceled it."], "a": 2, "e": "Attendance improved, stress decreased, and teams still met deadlines, so the system was generally successful."}, {"area": "Reading · Reference", "q": "In the final sentence, what does “these results” refer to?", "o": ["The original traffic problem only.", "The official start time.", "The number of scheduled meetings.", "Improved attendance, lower stress and effective team performance."], "a": 3, "e": "The phrase refers back to the positive outcomes described immediately before it."}, {"area": "Reading · Writer Purpose", "q": "Why does the writer mention the managers’ initial concern?", "o": ["To contrast an early worry with the later positive results.", "To show that teamwork completely failed.", "To explain why employees wanted to resign.", "To prove that traffic became worse."], "a": 0, "e": "The concern sets up a contrast with the later evidence that teamwork remained effective."}];
+let selected1=Array(questions1.length).fill(null);
+let selected2=Array(questions2.length).fill(null);
+let remaining=1800,elapsed=0,timer=null,finished=false,started=false,stage1Locked=false;
+
+function renderSet(rootId,questions,selected,prefix){
+  const root=document.getElementById(rootId);root.innerHTML="";
+  questions.forEach((x,i)=>{
+    const d=document.createElement("div");d.className="qcard";
+    d.innerHTML=`<div class="qhead"><div class="qnum">Question ${i+1}</div></div>
+    <div class="qtext">${x.q}</div>
+    <div class="options">${x.o.map((v,j)=>`<button class="option" data-p="${prefix}" data-i="${i}" data-o="${j}">${String.fromCharCode(65+j)}. ${v}</button>`).join("")}</div>
+    <div class="feedback" id="fb-${prefix}-${i}"></div>`;
+    root.appendChild(d);
+  });
+  root.querySelectorAll(".option").forEach(b=>b.addEventListener("click",()=>choose(b.dataset.p,+b.dataset.i,+b.dataset.o)));
+  updateProgress();
+}
+
+function choose(prefix,i,j){
+  if(finished)return;
+  if(prefix==="s1" && stage1Locked)return;
+  const arr=prefix==="s1"?selected1:selected2;
+  arr[i]=j;
+  const btns=[...document.querySelectorAll(`[data-p="${prefix}"][data-i="${i}"]`)];
+  btns.forEach(b=>b.classList.remove("selected"));
+  btns[j].classList.add("selected");
+  updateProgress();
+}
+
+function updateProgress(){
+  const d1=selected1.filter(v=>v!==null).length,d2=selected2.filter(v=>v!==null).length;
+  document.getElementById("done1").textContent=d1;document.getElementById("fill1").style.width=(d1/20*100)+"%";
+  document.getElementById("status1").textContent=d1===20?"All 20 answered. Review before continuing.":`${20-d1} question${20-d1===1?"":"s"} still unanswered.`;
+  document.getElementById("done2").textContent=d2;document.getElementById("fill2").style.width=(d2/5*100)+"%";
+  document.getElementById("status2").textContent=d2===5?"All reading questions answered. Review before final submission.":`${5-d2} reading question${5-d2===1?"":"s"} still unanswered.`;
+}
+
+function drawClock(){const abs=Math.max(remaining,0),m=String(Math.floor(abs/60)).padStart(2,"0"),s=String(abs%60).padStart(2,"0");document.getElementById("clock").textContent=`${m}:${s}`;}
+function fmt(sec){return `${Math.floor(sec/60)} min ${String(sec%60).padStart(2,"0")} sec`;}
+function startTimer(){if(timer||finished)return;started=true;document.getElementById("timerMsg").textContent="";timer=setInterval(()=>{elapsed++;remaining--;drawClock();if(remaining===0){clearInterval(timer);timer=null;document.getElementById("timerMsg").textContent="30-minute target reached — continue if needed. Your actual completion time will be recorded.";}},1000);}
+
+function goReading(){
+  const unanswered=selected1.filter(v=>v===null).length;
+  if(unanswered && !confirm(`You still have ${unanswered} unanswered question${unanswered===1?"":"s"} in Stage 1. Continue anyway? Stage 1 will be locked.`))return;
+  stage1Locked=true;
+  document.querySelectorAll('[data-p="s1"]').forEach(b=>b.disabled=true);
+  document.getElementById("stage1").classList.remove("active");
+  document.getElementById("stage2").classList.add("active");
+  window.scrollTo({top:document.querySelector("section[style]").offsetTop-70,behavior:"smooth"});
+}
+
+function backToStage1(){
+  document.getElementById("stage2").classList.remove("active");
+  document.getElementById("stage1").classList.add("active");
+  window.scrollTo({top:document.querySelector("section[style]").offsetTop-70,behavior:"smooth"});
+}
+
+function categorySummary(){
+  const groups={};
+  [...questions1.map((q,i)=>[q,selected1[i]]),...questions2.map((q,i)=>[q,selected2[i]])].forEach(([q,sel])=>{
+    if(!groups[q.area])groups[q.area]={total:0,correct:0};
+    groups[q.area].total++;if(sel===q.a)groups[q.area].correct++;
+  });
+  return groups;
+}
+
+function submitAssessment(){
+  if(finished)return;
+  const unanswered=selected2.filter(v=>v===null).length;
+  if(unanswered && !confirm(`You still have ${unanswered} unanswered reading question${unanswered===1?"":"s"}. Submit anyway?`))return;
+  finish();
+}
+
+function finish(){
+  finished=true;if(timer){clearInterval(timer);timer=null;}
+  let score1=0,score2=0;
+  [[questions1,selected1,"s1"],[questions2,selected2,"s2"]].forEach(([qs,sel,prefix])=>{
+    qs.forEach((q,i)=>{
+      if(sel[i]===q.a){if(prefix==="s1")score1++;else score2++;}
+      const btns=[...document.querySelectorAll(`[data-p="${prefix}"][data-i="${i}"]`)];
+      btns.forEach((b,j)=>{b.disabled=true;b.classList.remove("selected");if(j===q.a)b.classList.add("correct-answer");if(sel[i]===j&&j!==q.a)b.classList.add("incorrect-answer");});
+      const fb=document.getElementById(`fb-${prefix}-${i}`);
+      if(sel[i]===q.a){fb.className="feedback show good";fb.textContent="Correct. "+q.e;}
+      else{fb.className="feedback show bad";fb.textContent="Review. "+q.e;}
+    });
+  });
+  const total=score1+score2, incorrect=25-total,pct=Math.round(total/25*100),readingPct=Math.round(score2/5*100);
+  const secPerQ=elapsed?Math.round(elapsed/25):0, target=1800, pacePerQ=72;
+  let paceLabel,paceText;
+  if(!started){paceLabel="Timer not used";paceText="No completion time was recorded because the timer was not started.";}
+  else if(elapsed<=1500){paceLabel="Fast pace";paceText="You finished well inside the 30-minute target.";}
+  else if(elapsed<=1800){paceLabel="Exam-ready pace";paceText="You finished within the official exam-equivalent pace.";}
+  else if(elapsed<=2100){paceLabel="Slightly over target";paceText="Your pace is close, but you need a little more speed.";}
+  else{paceLabel="Pacing needs attention";paceText="You are using more time per question than the official exam pace allows.";}
+  const accuracyLabel=pct>=90?"Excellent accuracy":pct>=80?"Strong accuracy":pct>=75?"At the exam pass threshold":pct>=65?"Developing accuracy":"Accuracy needs reinforcement";
+  const groups=categorySummary(),ordered=Object.entries(groups).sort((a,b)=>(a[1].correct/a[1].total)-(b[1].correct/b[1].total)),weakest=ordered[0],strongest=[...ordered].reverse()[0];
+  const tips=[];
+  if(pct<75)tips.push("Prioritize accuracy before increasing speed.");
+  if(started&&elapsed<1200&&incorrect>=4)tips.push("You may be moving too quickly. Use more of your available time to verify structure, vocabulary meaning and reading evidence.");
+  if(weakest)tips.push(`Your weakest area in this assessment was ${weakest[0]}. Review that area first.`);
+  if(strongest&&strongest[0]!==weakest?.[0])tips.push(`Your strongest area was ${strongest[0]}. Keep it active through cumulative review.`);
+  if(readingPct<80)tips.push("For Reading, return to the passage and identify the exact sentence or idea that supports each answer.");
+  if(incorrect>0)tips.push("Add repeated error patterns—not isolated slips—to the Grammar/Vocabulary Error Bank.");
+  const rows=Object.entries(groups).map(([k,v])=>`<tr><td>${k}</td><td>${v.correct}/${v.total}</td><td>${Math.round(v.correct/v.total*100)}%</td></tr>`).join("");
+  const all=[...questions1.map((q,i)=>({...q,sel:selected1[i],n:i+1,section:"Stage 1"})),...questions2.map((q,i)=>({...q,sel:selected2[i],n:i+21,section:"Reading"}))];
+  const reviewRows=all.map(q=>`<tr><td>${q.n}</td><td>${q.area}</td><td>${q.sel===null?"—":q.o[q.sel]}</td><td>${q.o[q.a]}</td><td>${q.sel===q.a?"✓ Correct":"✗ Review"}</td></tr>`).join("");
+  const detailed=all.map(q=>{const ok=q.sel===q.a;return `<div class="answer-card ${ok?"correct":"wrong"}"><h4>Question ${q.n} · ${ok?"Correct":"Review"}</h4><p><b>${q.q}</b></p><p><b>Your answer:</b> ${q.sel===null?"No answer":q.o[q.sel]}</p><p><b>Correct answer:</b> ${q.o[q.a]}</p><p><b>Feedback:</b> ${q.e}</p><div class="answer-meta"><span class="answer-pill">${q.area}</span><span class="answer-pill">${q.section}</span></div></div>`;}).join("");
+  document.getElementById("stage1").classList.remove("active");document.getElementById("stage2").classList.remove("active");
+  const result=document.getElementById("result");
+  result.innerHTML=`<h2>Timed Assessment Feedback</h2>
+  <p><b>Accumulated completion time:</b> ${started?fmt(elapsed):"Not recorded"} · <b>Correct:</b> ${total}/25 · <b>Incorrect:</b> ${incorrect}/25 · <b>Overall accuracy:</b> ${pct}%</p>
+  <div class="grid2"><div class="card mint"><h3>${accuracyLabel}</h3><p>Stage 1: ${score1}/20 · Reading: ${score2}/5 (${readingPct}%).</p></div><div class="card sky"><h3>${paceLabel}</h3><p>${paceText}${started?`<br>Average: ${secPerQ} sec/question. Target pace: about ${pacePerQ} sec/question.`:""}</p></div></div>
+  <table class="category-table"><tr><th>Area</th><th>Correct</th><th>Accuracy</th></tr>${rows}</table>
+  <div class="rule"><b>Points to improve:</b><ul>${tips.map(t=>`<li>${t}</li>`).join("")}</ul></div>
+  <h3 style="margin-top:20px">Answer summary</h3><table class="review-table"><tr><th>#</th><th>Area</th><th>Your answer</th><th>Correct answer</th><th>Result</th></tr>${reviewRows}</table>
+  <div class="answer-summary"><h3>Detailed review & feedback</h3>${detailed}</div>`;
+  result.style.display="block";document.getElementById("timerMsg").textContent="Completed — both stages locked and feedback revealed.";result.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function resetAll(){
+  if(timer){clearInterval(timer);timer=null;}
+  selected1=Array(20).fill(null);selected2=Array(5).fill(null);remaining=1800;elapsed=0;finished=false;started=false;stage1Locked=false;
+  drawClock();document.getElementById("timerMsg").textContent="";document.getElementById("result").style.display="none";
+  document.getElementById("stage2").classList.remove("active");document.getElementById("stage1").classList.add("active");
+  renderSet("questions1",questions1,selected1,"s1");renderSet("questions2",questions2,selected2,"s2");
+}
+
+document.getElementById("startTimer").addEventListener("click",startTimer);
+document.getElementById("resetTimer").addEventListener("click",resetAll);
+document.getElementById("toReading").addEventListener("click",goReading);
+document.getElementById("backStage1").addEventListener("click",backToStage1);
+document.getElementById("submitAssessment").addEventListener("click",submitAssessment);
+window.addEventListener("scroll",()=>{const h=document.documentElement.scrollHeight-innerHeight;document.getElementById("scrollProgress").style.width=(h?scrollY/h*100:0)+"%";});
+renderSet("questions1",questions1,selected1,"s1");renderSet("questions2",questions2,selected2,"s2");drawClock();
+</script></body></html>
